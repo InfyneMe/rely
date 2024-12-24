@@ -1,6 +1,6 @@
 "use client";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import { Wallet, Save } from "lucide-react";
+import { Wallet, Save, Calendar } from "lucide-react";
 import React, { useState } from "react";
 import LoadingSpinner from "@/components/ui/Loading";
 
@@ -52,8 +52,9 @@ export default function PlaceholdersAndVanishInputDemo() {
   const [reminderInput, setReminderInput] = useState("");
   const [reminderDate, setReminderDate] = useState("");
   const [passLink, setPassLink] = useState<string | null>(null);
+  const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
-
+  console.log(isVehicleNumber)
   const handleFirstInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVehicleNumber(e.target.value);
     setIsVehicleNumber(true);
@@ -73,6 +74,10 @@ export default function PlaceholdersAndVanishInputDemo() {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReminderDate(e.target.value);
+  };
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocation(e.target.value);
   };
 
   const createGooglePass = async (e: React.FormEvent) => {
@@ -102,7 +107,10 @@ export default function PlaceholdersAndVanishInputDemo() {
     } finally {
       setTimeout(() => {
         setLoading(false);
-      }, 2000);
+        setVehicleNumber("");
+        setReminderInput("");
+        setReminderDate("");
+      }, 1000);
     }
   };
 
@@ -144,16 +152,14 @@ export default function PlaceholdersAndVanishInputDemo() {
           placeholder="Enter your vehicle number"
           className="w-[40rem] px-4 mt-5 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
         />
-        {isVehicleNumber && (
-          <input
+        <input
             id="inputField2"
             type="text"
             value={reminderInput}
             onChange={handleReminderInputChange}
             placeholder="Select Reminder Type"
             className="w-[40rem] px-4 mt-5 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
-          />
-        )}
+        />
         <div className="relative w-96">
           {reminderInput && filteredOptions.length > 0 && (
             <ul className="absolute z-10 w-full mt-2 bg-gray-800 rounded-lg shadow-lg border border-gray-600 divide-y divide-gray-700">
@@ -169,15 +175,22 @@ export default function PlaceholdersAndVanishInputDemo() {
             </ul>
           )}
         </div>
-        {selectedOption && (
-          <div className="flex mt-5 items-center justify-between w-[40rem]">
+         <div className="flex mt-5 items-center justify-between w-[40rem]">
             <input
               type="date"
               value={reminderDate}
               onChange={handleDateChange}
-              className="w-[16rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
+              className="w-[19rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
             />
-            <div className="flex ml-4 space-x-4">
+            <input
+              type="text"
+              value={location}
+              onChange={handleLocationChange}
+              placeholder="Nearby DTO Location"
+              className="w-[20rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
+            />
+          </div>
+          <div className="flex ml-4 space-x-4 mt-5">
               <a
                 href={passLink || undefined}
                 target={passLink ? "_blank" : undefined}
@@ -200,9 +213,14 @@ export default function PlaceholdersAndVanishInputDemo() {
                 <Save className="h-5 w-5" />
                 <span>Save Alert</span>
               </button>
-            </div>
+              <button
+                className="px-6 py-2 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:outline-none flex items-center space-x-2"
+                onClick={createGooglePass}
+              >
+                <Calendar className="h-5 w-5" />
+                <span>Add to calendar</span>
+              </button>
           </div>
-        )}
       </div>
     </div>
   );
