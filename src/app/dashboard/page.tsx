@@ -1,8 +1,40 @@
 "use client";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import { Wallet } from "lucide-react";
+import { Wallet, Save } from "lucide-react";
 import React, { useState } from "react";
-import { Save } from 'lucide-react';
+import LoadingSpinner from "@/components/ui/Loading";
+
+// const LoadingSpinner: React.FC = () => {
+//   return (
+//     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
+//       <div className="flex flex-col items-center space-y-6">
+//         {/* Gradient spinner */}
+//         <div className="relative">
+//           <div className="h-20 w-20 border-[6px] border-transparent border-t-blue-500 border-b-purple-500 rounded-full animate-spin"></div>
+//           <div className="absolute inset-0 flex items-center justify-center">
+//             <div className="h-10 w-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
+//           </div>
+//         </div>
+//         {/* Animated loading text */}
+//         <p className="text-xl font-semibold text-white tracking-wide animate-pulse">
+//           Preparing your pass...
+//         </p>
+//         {/* Branding */}
+//         <p className="text-sm text-gray-300">
+//           <span className="text-blue-500 font-bold">Designed</span> by{" "}
+//           <a
+//             href="https://infyne.in"
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             className="text-purple-500 font-bold hover:underline"
+//           >
+//             infyne.in
+//           </a>
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
 
 export default function PlaceholdersAndVanishInputDemo() {
   const reminderType = [
@@ -20,6 +52,7 @@ export default function PlaceholdersAndVanishInputDemo() {
   const [reminderInput, setReminderInput] = useState("");
   const [reminderDate, setReminderDate] = useState("");
   const [passLink, setPassLink] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false); // Loading state
 
   const handleFirstInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVehicleNumber(e.target.value);
@@ -44,6 +77,7 @@ export default function PlaceholdersAndVanishInputDemo() {
 
   const createGooglePass = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // Show loading spinner
     try {
       const response = await fetch("/api/createPass", {
         method: "POST",
@@ -65,6 +99,10 @@ export default function PlaceholdersAndVanishInputDemo() {
       setPassLink(data.cretePass);
     } catch (error) {
       console.error("Error creating Google Pass:", error);
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
   };
 
@@ -84,15 +122,13 @@ export default function PlaceholdersAndVanishInputDemo() {
     },
   ];
   const sharedButtonClasses =
-  "px-6 py-2 text-white rounded-lg shadow-lg focus:ring-2 focus:ring-offset-1 focus:outline-none flex items-center space-x-2";
-
-  // Additional styles for the disabled state
+    "px-6 py-2 text-white rounded-lg shadow-lg focus:ring-2 focus:ring-offset-1 focus:outline-none flex items-center space-x-2";
   const disabledClasses = "bg-sky-300 cursor-not-allowed";
   const enabledClasses = "bg-sky-500 hover:bg-gray-600 focus:ring-gray-400";
 
-
   return (
     <div className="h-[30rem] flex flex-col justify-center items-center px-4">
+      {loading && <LoadingSpinner />}
       <TypewriterEffectSmooth
         words={word.map((item) => ({
           ...item,
@@ -142,28 +178,28 @@ export default function PlaceholdersAndVanishInputDemo() {
               className="w-[16rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
             />
             <div className="flex ml-4 space-x-4">
-                <a
-                  href={passLink || undefined} // Prevent navigation if passLink is not available
-                  target={passLink ? "_blank" : undefined} // Open in a new tab only if passLink exists
-                  rel={passLink ? "noopener noreferrer" : undefined} // Prevent adding rel attributes if disabled
-                  className={`${sharedButtonClasses} ${
-                    passLink ? enabledClasses : disabledClasses
-                  }`}
-                  onClick={(e) => {
-                    if (!passLink) e.preventDefault(); // Disable click when no passLink
-                  }}
-                >
-                  <Wallet className="h-5 w-5" />
-                  <span>View Pass</span>
-                </a>
+              <a
+                href={passLink || undefined}
+                target={passLink ? "_blank" : undefined}
+                rel={passLink ? "noopener noreferrer" : undefined}
+                className={`${sharedButtonClasses} ${
+                  passLink ? enabledClasses : disabledClasses
+                }`}
+                onClick={(e) => {
+                  if (!passLink) e.preventDefault();
+                }}
+              >
+                <Wallet className="h-5 w-5" />
+                <span>View Pass</span>
+              </a>
 
-                <button
-                  className="px-6 py-2 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:outline-none flex items-center space-x-2"
-                  onClick={createGooglePass}
-                >
-                  <Save className="h-5 w-5" />
-                  <span>Save Alert</span>
-                </button>
+              <button
+                className="px-6 py-2 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:outline-none flex items-center space-x-2"
+                onClick={createGooglePass}
+              >
+                <Save className="h-5 w-5" />
+                <span>Save Alert</span>
+              </button>
             </div>
           </div>
         )}
