@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,8 +23,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  if (!clientId) {
+    throw new Error("Missing GOOGLE_CLIENT_ID environment variable");
+  }
   return (
-    <ClerkProvider>
+    <GoogleOAuthProvider clientId={clientId}>
       <html lang="en" className="bg-white dark:bg-black">
         <body 
           className={`${geistSans.variable} ${geistMono.variable} antialiased `}
@@ -32,6 +36,6 @@ export default function RootLayout({
           {children}
         </body>
       </html>
-    </ClerkProvider>
+    </GoogleOAuthProvider>
   );
 }

@@ -1,26 +1,13 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
-import { Play } from 'lucide-react';
 import { WalletCards } from 'lucide-react';
 import { CalendarCheck2 } from 'lucide-react';
+import { useGoogleLogin } from '@react-oauth/google';
+import { Play } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import {SignInButton} from "@clerk/nextjs";
-import { useAuth } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react"; 
 
 export default function Home() {
-
-  const router = useRouter();
-  const { isLoaded, isSignedIn } = useAuth();
-
-  useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      router.push('/dashboard');
-    }
-  }, [isLoaded, isSignedIn, router]);
-
   const word = [
     {
       text: 'Effortless',
@@ -30,6 +17,14 @@ export default function Home() {
       color: 'text-blue-500 dark:text-blue-500'
     }
   ];
+
+  const login = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      console.log('resCode',codeResponse);
+    },
+    flow: 'auth-code',
+    scope: 'https://www.googleapis.com/auth/calendar',
+  });
 
   return (
     <div className="place-items-center min-h-screen p-8 sm:p-20 text-center space-y-6 space-y-4" style={{marginTop: '10rem'}}>
@@ -45,12 +40,10 @@ export default function Home() {
       <span className="text-base md:text-lg font-light mt-4">
         Empowering you to make every moment count.
       </span>
-      <SignInButton>
-        <Button className="flex items-center justify-center">
+      <Button className="flex items-center justify-center" onClick={() => login()}>
           <Play className="mr-2" />
           Getting Started
-        </Button>
-      </SignInButton>
+      </Button>
       <span className="flex justify-center items-center space-x-3 text-sm md:text-sm font-bold">
         <CalendarCheck2 className="h-5 w-5" />
         <span className="ml-2">Add to calendar,</span>

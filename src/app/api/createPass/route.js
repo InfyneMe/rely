@@ -1,7 +1,9 @@
 import EventTicket from '../../../utils/GoogleWallet';
+import connectDB from "../../../lib/connectDB";
 
 export async function POST(request) {
     try {
+        await connectDB();
         if(request.length == 0) return{ status: 400, body: {error: 'Request body is required'}};
         const passDate = request.body;
         const eventTicket = new EventTicket();

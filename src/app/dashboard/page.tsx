@@ -4,38 +4,6 @@ import { Wallet, Save, Calendar } from "lucide-react";
 import React, { useState } from "react";
 import LoadingSpinner from "@/components/ui/Loading";
 
-// const LoadingSpinner: React.FC = () => {
-//   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50">
-//       <div className="flex flex-col items-center space-y-6">
-//         {/* Gradient spinner */}
-//         <div className="relative">
-//           <div className="h-20 w-20 border-[6px] border-transparent border-t-blue-500 border-b-purple-500 rounded-full animate-spin"></div>
-//           <div className="absolute inset-0 flex items-center justify-center">
-//             <div className="h-10 w-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full animate-pulse"></div>
-//           </div>
-//         </div>
-//         {/* Animated loading text */}
-//         <p className="text-xl font-semibold text-white tracking-wide animate-pulse">
-//           Preparing your pass...
-//         </p>
-//         {/* Branding */}
-//         <p className="text-sm text-gray-300">
-//           <span className="text-blue-500 font-bold">Designed</span> by{" "}
-//           <a
-//             href="https://infyne.in"
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="text-purple-500 font-bold hover:underline"
-//           >
-//             infyne.in
-//           </a>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
-
 export default function PlaceholdersAndVanishInputDemo() {
   const reminderType = [
     "Driving Licence Expiry",
@@ -129,8 +97,7 @@ export default function PlaceholdersAndVanishInputDemo() {
       color: "text-blue-500 dark:text-blue-500",
     },
   ];
-  const sharedButtonClasses =
-    "px-6 py-2 text-white rounded-lg shadow-lg focus:ring-2 focus:ring-offset-1 focus:outline-none flex items-center space-x-2";
+  const sharedButtonClasses ="px-6 py-2 text-white rounded-lg shadow-lg focus:ring-2 focus:ring-offset-1 focus:outline-none flex items-center space-x-2";
   const disabledClasses = "bg-sky-300 cursor-not-allowed";
   const enabledClasses = "bg-sky-500 hover:bg-gray-600 focus:ring-gray-400";
 
