@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
-      <div className="dashboard-container text-gray-800 text-gray-100 min-h-screen">
+      <div className="dashboard-container min-h-screen">
         <header className="p-4 text-dark container mx-auto flex justify-between items-center mt-5">
             <h1 className="text-2xl font-bold ml-4">
               <Link href="/dashboard">Relyx</Link>
