@@ -6,6 +6,8 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { Play } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
+import { useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const word = [
@@ -17,6 +19,13 @@ export default function Home() {
       color: 'text-blue-500 dark:text-blue-500'
     }
   ];
+  const router = useRouter();
+  useEffect(() => {
+    const idToken = localStorage.getItem('id_token');
+    if (idToken) {
+      router.push('/dashboard');
+    }
+  }, [router])
 
   const login = useGoogleLogin({
     onSuccess: async (codeResponse) => {
@@ -28,9 +37,11 @@ export default function Home() {
         body: JSON.stringify({ code: codeResponse }),
       });
       const data = await response.json();
-      console.log('response',data);
+      localStorage.setItem('id_token', data.id_token);
+      router.push('/dashboard');
     },
     flow: 'auth-code',
+    
     scope: 'https://www.googleapis.com/auth/calendar',
   });
 
