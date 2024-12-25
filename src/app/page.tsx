@@ -20,7 +20,15 @@ export default function Home() {
 
   const login = useGoogleLogin({
     onSuccess: async (codeResponse) => {
-      console.log('resCode',codeResponse);
+      const response = await fetch('/api/userLogin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code: codeResponse }),
+      });
+      const data = await response.json();
+      console.log('response',data);
     },
     flow: 'auth-code',
     scope: 'https://www.googleapis.com/auth/calendar',

@@ -1,4 +1,3 @@
-import { SignedIn, UserButton } from '@clerk/nextjs'
 import Link from 'next/link';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -19,9 +18,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <h1 className="cursor-pointer hover:text-blue-500 transition">FAQs</h1>
                 <h1 className="cursor-pointer hover:text-blue-500 transition">Blogs</h1>
             </nav>
-            <SignedIn>
-                <UserButton />
-            </SignedIn>
         </header>
         <main className="p-6">{children}</main>
       </div>
