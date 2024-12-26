@@ -29,7 +29,7 @@ export default function Home() {
 
   const login = useGoogleLogin({
     onSuccess: async (codeResponse) => {
-      const response = await fetch('/api/userLogin', {
+      const response = await fetch('/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
