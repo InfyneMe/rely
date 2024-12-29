@@ -3,6 +3,19 @@ import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { Wallet, Save, Calendar } from "lucide-react";
 import React, { useState } from "react";
 import LoadingSpinner from "@/components/ui/Loading";
+interface PlacePrediction {
+  description: string;
+  place_id: string;
+  structured_formatting: {
+    main_text: string;
+    secondary_text: string;
+  };
+}
+
+interface GooglePlacesResponse {
+  predictions: PlacePrediction[];
+  status: string;
+}
 
 export default function PlaceholdersAndVanishInputDemo() {
   const reminderType = [
@@ -22,6 +35,8 @@ export default function PlaceholdersAndVanishInputDemo() {
   const [passLink, setPassLink] = useState<string | null>(null);
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false); // Loading state
+  const [suggestions, setSuggestions] = useState<PlacePrediction[]>([]);
+
   console.log(isVehicleNumber)
   const handleFirstInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVehicleNumber(e.target.value);
@@ -44,10 +59,34 @@ export default function PlaceholdersAndVanishInputDemo() {
     setReminderDate(e.target.value);
   };
 
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocation(e.target.value);
+  const handleLocationChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const userInput = e.target.value;
+    setLocation(userInput);
+  
+    if (userInput.trim() === '') {
+      setSuggestions([]);
+      return;
+    }
+  
+    try {
+      const response = await fetch(`/api/place?input=${encodeURIComponent(userInput)}`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data: GooglePlacesResponse = await response.json();
+      
+      if (data.status === 'OK') {
+        setSuggestions(data.predictions);
+      } else {
+        setSuggestions([]);
+      }
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+      setSuggestions([]);
+    }
   };
-
   const createGooglePass = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true); // Show loading spinner
@@ -81,6 +120,15 @@ export default function PlaceholdersAndVanishInputDemo() {
       }, 1000);
     }
   };
+  const sendWhatsAppMsg = async() => {
+    try {
+      const response = await fetch('/api/whatsapp');
+      const data = await response.json()
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const word = [
     {
@@ -142,21 +190,40 @@ export default function PlaceholdersAndVanishInputDemo() {
             </ul>
           )}
         </div>
-         <div className="flex mt-5 items-center justify-between w-[40rem]">
-            <input
-              type="date"
-              value={reminderDate}
-              onChange={handleDateChange}
-              className="w-[19rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
-            />
+        <div className="relative flex mt-5 items-center justify-between w-[40rem]">
+          <input
+            type="date"
+            value={reminderDate}
+            onChange={handleDateChange}
+            className="w-[19rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
+          />
+          <div className="relative w-[19rem]"> {/* Add this wrapper div */}
             <input
               type="text"
               value={location}
               onChange={handleLocationChange}
               placeholder="Nearby DTO Location"
-              className="w-[20rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
+              onBlur={() => {setTimeout(() => setSuggestions([]), 200)}}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
             />
+            {suggestions.length > 0 && (
+              <ul className="absolute top-full left-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      setLocation(suggestion.description);
+                      setSuggestions([]);
+                    }}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
+                  >
+                    {suggestion.description}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
+        </div>
           <div className="flex ml-4 space-x-4 mt-5">
               <a
                 href={passLink || undefined}
@@ -182,10 +249,10 @@ export default function PlaceholdersAndVanishInputDemo() {
               </button>
               <button
                 className="px-6 py-2 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:outline-none flex items-center space-x-2"
-                onClick={createGooglePass}
+                onClick={sendWhatsAppMsg}
               >
                 <Calendar className="h-5 w-5" />
-                <span>Add to calendar</span>
+                <span>Send Whatsapp</span>
               </button>
           </div>
       </div>
