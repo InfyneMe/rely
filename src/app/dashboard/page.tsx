@@ -132,195 +132,76 @@ export default function PlaceholdersAndVanishInputDemo() {
 
   const word = [
     {
-      text: "অ্যাপ্লিকেশনে",
+      text: "Welcome to ",
     },
     {
-      text: "স্বাগতম!",
+      text: "Relyx!",
       color: "text-blue-500 dark:text-blue-500",
     },
   ];
-
-  const [startLocation, setStartLocation] = useState("");
-  const [destination, setDestination] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  // const sharedButtonClasses ="px-6 py-2 text-white rounded-lg shadow-lg focus:ring-2 focus:ring-offset-1 focus:outline-none flex items-center space-x-2";
-  // const disabledClasses = "bg-sky-300 cursor-not-allowed";
-  // const enabledClasses = "bg-sky-500 hover:bg-gray-600 focus:ring-gray-400";
+  const sharedButtonClasses ="px-6 py-2 text-white rounded-lg shadow-lg focus:ring-2 focus:ring-offset-1 focus:outline-none flex items-center space-x-2";
+  const disabledClasses = "bg-sky-300 cursor-not-allowed";
+  const enabledClasses = "bg-sky-500 hover:bg-gray-600 focus:ring-gray-400";
 
   return (
     //relyx div
-    // <div className="h-[30rem] flex flex-col justify-center items-center px-4">
-    //   {loading && <LoadingSpinner />}
-    //   <TypewriterEffectSmooth
-    //     words={word.map((item) => ({
-    //       ...item,
-    //       className: item.color || "text-black",
-    //     }))}
-    //   />
-    //   <div className="flex mt-4 flex-col items-center w-full">
-    //     <input
-    //       id="inputField"
-    //       type="text"
-    //       value={vehicleNumber}
-    //       onChange={handleFirstInputChange}
-    //       placeholder="Enter your vehicle number"
-    //       className="w-[40rem] px-4 mt-5 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
-    //     />
-    //     <input
-    //         id="inputField2"
-    //         type="text"
-    //         value={reminderInput}
-    //         onChange={handleReminderInputChange}
-    //         placeholder="Select Reminder Type"
-    //         className="w-[40rem] px-4 mt-5 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
-    //     />
-    //     <div className="relative w-96">
-    //       {reminderInput && filteredOptions.length > 0 && (
-    //         <ul className="absolute z-10 w-full mt-2 bg-gray-800 rounded-lg shadow-lg border border-gray-600 divide-y divide-gray-700">
-    //           {filteredOptions.map((option, index) => (
-    //             <li
-    //               key={index}
-    //               className="px-4 py-2 text-gray-300 hover:bg-sky-500 hover:text-white focus:bg-sky-500 focus:text-white transition-colors cursor-pointer whitespace-nowrap rounded-lg"
-    //               onClick={() => handleOptionSelect(option)}
-    //             >
-    //               {option}
-    //             </li>
-    //           ))}
-    //         </ul>
-    //       )}
-    //     </div>
-    //     <div className="relative flex mt-5 items-center justify-between w-[40rem]">
-    //       <input
-    //         type="date"
-    //         value={reminderDate}
-    //         onChange={handleDateChange}
-    //         className="w-[19rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
-    //       />
-          // <div className="relative w-[19rem]"> {/* Add this wrapper div */}
-          //   <input
-          //     type="text"
-          //     value={location}
-          //     onChange={handleLocationChange}
-          //     placeholder="Nearby DTO Location"
-          //     onBlur={() => {setTimeout(() => setSuggestions([]), 200)}}
-          //     className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
-          //   />
-            // {suggestions.length > 0 && (
-            //   <ul className="absolute top-full left-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
-            //     {suggestions.map((suggestion, index) => (
-            //       <li
-            //         key={index}
-            //         onClick={() => {
-            //           setLocation(suggestion.description);
-            //           setSuggestions([]);
-            //         }}
-            //         className="px-4 py-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
-            //       >
-            //         {suggestion.description}
-            //       </li>
-            //     ))}
-            //   </ul>
-            // )}
-          // </div>
-    //     </div>
-    //       <div className="flex ml-4 space-x-4 mt-5">
-    //           <a
-    //             href={passLink || undefined}
-    //             target={passLink ? "_blank" : undefined}
-    //             rel={passLink ? "noopener noreferrer" : undefined}
-    //             className={`${sharedButtonClasses} ${
-    //               passLink ? enabledClasses : disabledClasses
-    //             }`}
-    //             onClick={(e) => {
-    //               if (!passLink) e.preventDefault();
-    //             }}
-    //           >
-    //             <Wallet className="h-5 w-5" />
-    //             <span>View Pass</span>
-    //           </a>
-
-    //           <button
-    //             className="px-6 py-2 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:outline-none flex items-center space-x-2"
-    //             onClick={createGooglePass}
-    //           >
-    //             <Save className="h-5 w-5" />
-    //             <span>Save Alert</span>
-    //           </button>
-    //           <button
-    //             className="px-6 py-2 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:outline-none flex items-center space-x-2"
-    //             onClick={sendWhatsAppMsg}
-    //           >
-    //             <Calendar className="h-5 w-5" />
-    //             <span>Send Whatsapp</span>
-    //           </button>
-    //       </div>
-    //   </div>
-    // </div>
-
-    //rider div
     <div className="h-[30rem] flex flex-col justify-center items-center px-4">
+      {loading && <LoadingSpinner />}
       <TypewriterEffectSmooth
         words={word.map((item) => ({
           ...item,
           className: item.color || "text-black",
         }))}
       />
-      <div className="flex flex-wrap items-center border border-gray-300 rounded-lg shadow-sm p-4 gap-4 dark:bg-gray-800 dark:border-gray-700">
-        {/* Starting Location */}
-        <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            শুরুস্থান
-          </label>
-          <input
+      <div className="flex mt-4 flex-col items-center w-full">
+        <input
+          id="inputField"
+          type="text"
+          value={vehicleNumber}
+          onChange={handleFirstInputChange}
+          placeholder="Enter your vehicle number"
+          className="w-[40rem] px-4 mt-5 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
+        />
+        <input
+            id="inputField2"
             type="text"
-            value={location}
-            onChange={handleLocationChange}
-            placeholder="আপনার শুরুস্থান লিখুন"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-          />
+            value={reminderInput}
+            onChange={handleReminderInputChange}
+            placeholder="Select Reminder Type"
+            className="w-[40rem] px-4 mt-5 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
+        />
+        <div className="relative w-96">
+          {reminderInput && filteredOptions.length > 0 && (
+            <ul className="absolute z-10 w-full mt-2 bg-gray-800 rounded-lg shadow-lg border border-gray-600 divide-y divide-gray-700">
+              {filteredOptions.map((option, index) => (
+                <li
+                  key={index}
+                  className="px-4 py-2 text-gray-300 hover:bg-sky-500 hover:text-white focus:bg-sky-500 focus:text-white transition-colors cursor-pointer whitespace-nowrap rounded-lg"
+                  onClick={() => handleOptionSelect(option)}
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-
-        {/* Destination */}
-        <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            গন্তব্যস্থান
-          </label>
-          <input
-            type="text"
-            value={destination}
-            onChange={handleDestination}
-            placeholder="আপনার গন্তব্যস্থান লিখুন"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-          />
-        </div>
-
-        {/* Date Picker */}
-        <div className="w-1/5">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            তারিখ
-          </label>
+        <div className="relative flex mt-5 items-center justify-between w-[40rem]">
           <input
             type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="w-full px-2 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+            value={reminderDate}
+            onChange={handleDateChange}
+            className="w-[19rem] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
           />
-        </div>
-
-        {/* Time Picker */}
-        <div className="w-1/5">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            সময়
-          </label>
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            className="w-full px-2 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-          />
-        </div>
-        {suggestions.length > 0 && (
+          <div className="relative w-[19rem]"> {/* Add this wrapper div */}
+            <input
+              type="text"
+              value={location}
+              onChange={handleLocationChange}
+              placeholder="Nearby DTO Location"
+              onBlur={() => {setTimeout(() => setSuggestions([]), 200)}}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:placeholder-gray-400"
+            />
+            {suggestions.length > 0 && (
               <ul className="absolute top-full left-0 z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
                 {suggestions.map((suggestion, index) => (
                   <li
@@ -335,7 +216,40 @@ export default function PlaceholdersAndVanishInputDemo() {
                   </li>
                 ))}
               </ul>
-        )}
+            )}
+          </div>
+        </div>
+          <div className="flex ml-4 space-x-4 mt-5">
+              <a
+                href={passLink || undefined}
+                target={passLink ? "_blank" : undefined}
+                rel={passLink ? "noopener noreferrer" : undefined}
+                className={`${sharedButtonClasses} ${
+                  passLink ? enabledClasses : disabledClasses
+                }`}
+                onClick={(e) => {
+                  if (!passLink) e.preventDefault();
+                }}
+              >
+                <Wallet className="h-5 w-5" />
+                <span>View Pass</span>
+              </a>
+
+              <button
+                className="px-6 py-2 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:outline-none flex items-center space-x-2"
+                onClick={createGooglePass}
+              >
+                <Save className="h-5 w-5" />
+                <span>Save Alert</span>
+              </button>
+              <button
+                className="px-6 py-2 bg-gray-500 text-white rounded-lg shadow-lg hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 focus:outline-none flex items-center space-x-2"
+                onClick={sendWhatsAppMsg}
+              >
+                <Calendar className="h-5 w-5" />
+                <span>Send Whatsapp</span>
+              </button>
+          </div>
       </div>
     </div>
   );
