@@ -132,124 +132,124 @@ const VehicleReminderForm = ({ apiKey }) => {
 
         {/* Main Form Card */}
         <div className="bg-white rounded-3xl shadow-xl overflow-hidden backdrop-blur-lg backdrop-filter">
-          <div className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Two Fields in One Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* Vehicle Number Section */}
-                <div className="space-y-3">
-                  <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
-                    <Car className="w-4 h-4 mr-2 text-blue-500" />
-                    Vehicle Number
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.vehicleNumber}
-                    onChange={(e) => setFormData({...formData, vehicleNumber: e.target.value})}
-                    placeholder="Enter vehicle number"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
-                  />
-                </div>
-
-                {/* Reminder Type Section */}
-                <div className="space-y-3">
-                  <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
-                    <Bell className="w-4 h-4 mr-2 text-blue-500" />
-                    Reminder Type
-                  </label>
-                  <select
-                    value={formData.reminderType}
-                    onChange={(e) => setFormData({...formData, reminderType: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white appearance-none cursor-pointer"
-                  >
-                    <option value="">Select reminder type</option>
-                    {reminderTypes.map((type) => (
-                      <option key={type} value={type}>{type}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* Two Fields in One Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* DateTime Section */}
-                <div className="space-y-3">
-                  <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
-                    <Calendar className="w-4 h-4 mr-2 text-blue-500" />
-                    Reminder Date & Time
-                  </label>
-                  <input
-                    type="datetime-local"
-                    value={formData.reminderDateTime}
-                    onChange={(e) => setFormData({...formData, reminderDateTime: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
-                  />
-                </div>
-
-                {/* Location Search Section */}
-                <div className="space-y-3">
-                  <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
-                    <MapPin className="w-4 h-4 mr-2 text-blue-500" />
-                    Service Location
-                  </label>
-                  <div className="relative">
+            <div className="p-8">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Two Fields in One Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* Vehicle Number Section */}
+                  <div className="space-y-3">
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+                      <Car className="w-4 h-4 mr-2 text-blue-500" />
+                      Vehicle Number
+                    </label>
                     <input
                       type="text"
-                      value={searchValue}
-                      onChange={(e) => handleSearch(e.target.value)}
-                      placeholder={isApiLoaded ? "Search for a location" : "Loading Google Maps..."}
-                      disabled={!isApiLoaded}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      value={formData.vehicleNumber}
+                      onChange={(e) => setFormData({...formData, vehicleNumber: e.target.value})}
+                      placeholder="Enter vehicle number"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
                     />
+                  </div>
 
-                    {isLoading && (
-                      <div className="absolute right-3 top-3">
-                        <div className="animate-spin h-6 w-6 border-2 border-blue-500 rounded-full border-t-transparent"></div>
-                      </div>
-                    )}
-
-                    {predictions.length > 0 && (
-                      <div className="absolute z-10 w-full mt-2 bg-white rounded-xl shadow-lg max-h-60 overflow-auto border border-gray-100">
-                        {predictions.map((prediction) => (
-                          <div
-                            key={prediction.place_id}
-                            onClick={() => handlePlaceSelect(prediction.place_id)}
-                            className="px-4 py-3 hover:bg-blue-50 cursor-pointer transition-colors duration-150"
-                          >
-                            <p className="text-sm text-gray-700">{prediction.description}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                  {/* Reminder Type Section */}
+                  <div className="space-y-3">
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+                      <Bell className="w-4 h-4 mr-2 text-blue-500" />
+                      Reminder Type
+                    </label>
+                    <select
+                      value={formData.reminderType}
+                      onChange={(e) => setFormData({...formData, reminderType: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white appearance-none cursor-pointer"
+                    >
+                      <option value="">Select reminder type</option>
+                      {reminderTypes.map((type) => (
+                        <option key={type} value={type}>{type}</option>
+                      ))}
+                    </select>
                   </div>
                 </div>
-              </div>
 
-              {selectedPlace && (
-                <div className="mt-3 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
-                  <p className="text-sm text-gray-700">
-                    <span className="font-medium">Selected Location:</span> {selectedPlace.address}
-                  </p>
-                  <div className="mt-2 text-xs text-gray-500 flex gap-4">
-                    <span>Lat: {selectedPlace.lat}</span>
-                    <span>Long: {selectedPlace.lng}</span>
+                {/* Two Fields in One Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {/* DateTime Section */}
+                  <div className="space-y-3">
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+                      <Calendar className="w-4 h-4 mr-2 text-blue-500" />
+                      Reminder Date & Time
+                    </label>
+                    <input
+                      type="datetime-local"
+                      value={formData.reminderDateTime}
+                      onChange={(e) => setFormData({...formData, reminderDateTime: e.target.value})}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white"
+                    />
+                  </div>
+
+                  {/* Location Search Section */}
+                  <div className="space-y-3">
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-1">
+                      <MapPin className="w-4 h-4 mr-2 text-blue-500" />
+                      Service Location
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        value={searchValue}
+                        onChange={(e) => handleSearch(e.target.value)}
+                        placeholder={isApiLoaded ? "Search for a location" : "Loading Google Maps..."}
+                        disabled={!isApiLoaded}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
+                      />
+
+                      {isLoading && (
+                        <div className="absolute right-3 top-3">
+                          <div className="animate-spin h-6 w-6 border-2 border-blue-500 rounded-full border-t-transparent"></div>
+                        </div>
+                      )}
+
+                      {predictions.length > 0 && (
+                        <div className="absolute z-10 w-full mt-2 bg-white rounded-xl shadow-lg max-h-60 overflow-auto border border-gray-100">
+                          {predictions.map((prediction) => (
+                            <div
+                              key={prediction.place_id}
+                              onClick={() => handlePlaceSelect(prediction.place_id)}
+                              className="px-4 py-3 hover:bg-blue-50 cursor-pointer transition-colors duration-150"
+                            >
+                              <p className="text-sm text-gray-700">{prediction.description}</p>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              )}
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl 
-                         hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium 
-                         shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-              >
-                Set Reminder
-              </button>
-            </form>
-          </div>
+                {selectedPlace && (
+                  <div className="mt-3 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
+                    <p className="text-sm text-gray-700">
+                      <span className="font-medium">Selected Location:</span> {selectedPlace.address}
+                    </p>
+                    <div className="mt-2 text-xs text-gray-500 flex gap-4">
+                      <span>Lat: {selectedPlace.lat}</span>
+                      <span>Long: {selectedPlace.lng}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl 
+                          hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium 
+                          shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                >
+                  Set Reminder
+                </button>
+              </form>
+            </div>
         </div>
-      </div>
+    </div>
   );
 };
 
