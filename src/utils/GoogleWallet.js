@@ -20,11 +20,19 @@ export default class EventTicket {
         });
         this.client = google.walletobjects({version: 'v1', auth});
     }
-    async createClass(vehicleNumber, selectedOption, reminderDate, user) {
+    async createClass(vehicleNumber, reminderType, reminderDateTime, location, user) {
         try {
             const issuerID = "3388000000022802937";
             const classSuffix = uuidv4(); // Ensure uuidv4 is imported or available
-    
+            
+            const dateTime = new Date(reminderDateTime);
+            dateTime.setHours(dateTime.getHours() + 2);
+            const startDate = dateTime.toISOString();
+
+            const endDate = new Date(dateTime);
+            endDate.setHours(endDate.getHours() + 2);
+            const endDateString = endDate.toISOString();
+
             const newClass = {
                 id: `${issuerID}.${classSuffix}`,
                 issuerName: 'Relyx',
@@ -32,7 +40,7 @@ export default class EventTicket {
                 eventName: {
                     defaultValue: {
                         language: 'en-US',
-                        value: selectedOption,
+                        value: reminderType,
                     }
                 }
             };
@@ -43,18 +51,23 @@ export default class EventTicket {
                 state: 'ACTIVE',
                 ticketHolderName: user.name,
                 ticketNumber: '2344323',
+                eventLocation: {
+                    venueName: location.name,  // Check that location.name exists
+                },
+                startDateTime: {
+                    dateTime: startDate, // Ensure startDate is a valid ISO string
+                    timeZone: "Asia/Kolkata" // Correct timezone format (Asia/Kolkata instead of Assia/Kolkata)
+                },
+                endDateTime: {
+                    dateTime: endDateString, // Ensure endDateString is a valid ISO string
+                    timeZone: "America/New_York" // Correct timezone
+                },
                 location: {
-                    latitude: 37.7749,  // Example: Latitude of San Francisco
-                    longitude: -122.4194, // Example: Longitude of San Francisco
-                    name: 'Event Location Name',
-                    address: '123 Main Street, San Francisco, CA',
-                },
-                dateAndTime: {
-                    startDate: '2025-01-15T10:00:00Z', // ISO 8601 format for start date and time
-                    endDate: '2025-01-15T12:00:00Z', // ISO 8601 format for end date and time
-                    timezone: 'America/Los_Angeles', // Timezone information
-                },
+                    latitude: location.lat,  // Check latitude
+                    longitude: location.lng // Check longitude
+                }
             };
+            
             
     
             const claims = {

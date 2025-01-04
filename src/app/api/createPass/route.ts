@@ -1,6 +1,6 @@
 import connectDB from "../../../lib/connectDB";
 import UserModel from '@/models/userModels';
-import EventTicket from '../../../utils/GoogleWallet';
+// import EventTicket from '../../../utils/GoogleWallet';
 import { NextRequest, NextResponse } from 'next/server';
 
 await connectDB();
