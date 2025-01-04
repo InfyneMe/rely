@@ -6,10 +6,12 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { Play } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import { useEffect } from "react";
 import { useRouter } from 'next/navigation';
+import React, { useState } from "react";
+import LoadingSpinner from "@/components/ui/Loading";
 
 export default function Home() {
+  const [loading, setLoading] = useState(false);
   const word = [
     {
       text: 'Effortless',
@@ -20,15 +22,9 @@ export default function Home() {
     }
   ];
   const router = useRouter();
-  useEffect(() => {
-    const idToken = localStorage.getItem('id_token');
-    if (idToken) {
-      router.push('/dashboard');
-    }
-  }, [router])
-
   const login = useGoogleLogin({
     onSuccess: async (codeResponse) => {
+      setLoading(true);
       const response = await fetch('/api/user/login', {
         method: 'POST',
         headers: {
@@ -37,16 +33,16 @@ export default function Home() {
         body: JSON.stringify({ code: codeResponse }),
       });
       const data = await response.json();
-      localStorage.setItem('id_token', data.id_token);
+      console.log(data);
       router.push('/dashboard');
     },
     flow: 'auth-code',
-    
     scope: 'https://www.googleapis.com/auth/calendar',
   });
 
   return (
     <div className="place-items-center min-h-screen p-8 sm:p-20 text-center space-y-6 space-y-4" style={{marginTop: '10rem'}}>
+      {loading && <LoadingSpinner message="Verifying your data please wait..." />}
       <span className="font-poppins tracking-wide font-extrabold text-center md:text-6xl lg:text-8xl xl:text-6xl">
         Relyx -Timely Reminders, 
       </span>

@@ -5,7 +5,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="dashboard-container min-h-screen">
         <header className="p-4 text-dark container mx-auto flex justify-between items-center mt-5">
             <h1 className="text-2xl font-bold ml-4">
-              <Link href="/dashboard">PassKit</Link>
+              <Link href="/dashboard">Relyx</Link>
             </h1>
             <nav className="flex space-x-8 justify-center items-center ">
                 <h1 className="cursor-pointer text-bold hover:text-blue-500 transition">

@@ -1,4 +1,8 @@
-const LoadingSpinner: React.FC = () => {
+interface LoadingProps {
+  message: string;
+}
+
+const LoadingSpinner: React.FC<LoadingProps> = ({message}) => {
   return (
     <div className="fixed inset-0 bg-gray-700 bg-opacity-95 flex items-center justify-center z-50">
       <div className="flex flex-col items-center space-y-6">
@@ -11,7 +15,7 @@ const LoadingSpinner: React.FC = () => {
         </div>
         {/* Animated loading text */}
         <p className="text-lg font-semibold text-white tracking-wide animate-pulse">
-          Preparing your pass...
+          {message}
         </p>
         {/* Branding with infinity animation */}
         <div className="flex flex-col items-center space-y-2">

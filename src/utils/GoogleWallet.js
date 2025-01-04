@@ -20,11 +20,10 @@ export default class EventTicket {
         });
         this.client = google.walletobjects({version: 'v1', auth});
     }
-    async createClass() {
+    async createClass(vehicleNumber, selectedOption, reminderDate, user) {
         try {
             const issuerID = "3388000000022802937";
             const classSuffix = uuidv4(); // Ensure uuidv4 is imported or available
-            const eventName = "Sample Event"; // Define eventName or pass it as an argument
     
             const newClass = {
                 id: `${issuerID}.${classSuffix}`,
@@ -33,7 +32,7 @@ export default class EventTicket {
                 eventName: {
                     defaultValue: {
                         language: 'en-US',
-                        value: eventName,
+                        value: selectedOption,
                     }
                 }
             };
@@ -42,24 +41,21 @@ export default class EventTicket {
                 id: `${issuerID}.${classSuffix}`,
                 classId: `${issuerID}.${classSuffix}`,
                 state: 'ACTIVE',
-                heroImage: {
-                    sourceUri: {
-                        uri: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1032&h=336'
-                    },
-                    contentDescription: {
-                        defaultValue: {
-                            language: 'en-US',
-                            value: "Created By Relx"
-                        },
-                    },
+                ticketHolderName: user.name,
+                ticketNumber: '2344323',
+                location: {
+                    latitude: 37.7749,  // Example: Latitude of San Francisco
+                    longitude: -122.4194, // Example: Longitude of San Francisco
+                    name: 'Event Location Name',
+                    address: '123 Main Street, San Francisco, CA',
                 },
-                barcode: {
-                    type: 'QR_CODE',
-                    value: 'QR code'
+                dateAndTime: {
+                    startDate: '2025-01-15T10:00:00Z', // ISO 8601 format for start date and time
+                    endDate: '2025-01-15T12:00:00Z', // ISO 8601 format for end date and time
+                    timezone: 'America/Los_Angeles', // Timezone information
                 },
-                ticketHolderName: 'Ticket holder name',
-                ticketNumber: '2344323'
             };
+            
     
             const claims = {
                 iss: this.credentials.client_email,

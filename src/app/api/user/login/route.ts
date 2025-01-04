@@ -29,16 +29,19 @@ export async function POST(request: NextRequest) {
 
         const userInfo = jwtDecode<DecodedToken>(id_token!)
         await connectDB()
-        const user = new UserModel({
-            name: `${userInfo.given_name} ${userInfo.family_name}`,
-            email: userInfo.email,
-            access_token,
-            refresh_token,
-            email_verified: userInfo.email_verified,
-            picture: userInfo.picture,
-            id_token
-        })
-        await user.save();
+        await UserModel.findOneAndUpdate(
+            {email: userInfo.email},
+            {
+                name: `${userInfo.given_name} ${userInfo.family_name}`,
+                email: userInfo.email,
+                access_token,
+                refresh_token,
+                email_verified: userInfo.email_verified,
+                picture: userInfo.picture,
+                id_token
+            },
+            {new: true, upsert: true}
+        )
         const response = NextResponse.json(
             {
                 message: "Login Success",
@@ -56,19 +59,4 @@ export async function POST(request: NextRequest) {
         }
         return NextResponse.json({ error: 'An unknown error occurred' }, { status: 500 });
     }
-
-    // create or update demo
-    // const user = await UserModel.findOneAndUpdate(
-    //     { email: userInfo.email },
-    //     {
-    //       name: `${userInfo.given_name} ${userInfo.family_name}`,
-    //       email: userInfo.email,
-    //       access_token,
-    //       refresh_token,
-    //       email_verified: userInfo.email_verified,
-    //       picture: userInfo.picture,
-    //       id_token,
-    //     },
-    //     { new: true, upsert: true }
-    //   );
 }
