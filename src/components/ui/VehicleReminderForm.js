@@ -37,25 +37,32 @@ const VehicleReminderForm = ({ apiKey }) => {
       setError('Google Maps API key is required');
       return;
     }
-
+  
+    // Check if the script is already loaded
     if (window.google && window.google.maps) {
       initializeGooglePlaces();
     } else {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => initializeGooglePlaces();
-      script.onerror = () => setError('Failed to load Google Maps API');
-      document.head.appendChild(script);
-
-      return () => {
-        if (document.head.contains(script)) {
-          document.head.removeChild(script);
-        }
-      };
+      const existingScript = document.querySelector('script[src^="https://maps.googleapis.com/maps/api/js"]');
+      
+      // If the script is not already loaded, load it
+      if (!existingScript) {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+        script.async = true;
+        script.defer = true;
+        script.onload = () => initializeGooglePlaces();
+        script.onerror = () => setError('Failed to load Google Maps API');
+        document.head.appendChild(script);
+  
+        return () => {
+          if (document.head.contains(script)) {
+            document.head.removeChild(script);
+          }
+        };
+      }
     }
   }, [apiKey]);
+  
 
   useEffect(() => {
     const alerts = async () => {
@@ -155,7 +162,7 @@ const VehicleReminderForm = ({ apiKey }) => {
     <div className="max-w-7xl mx-auto p-6 sm:p-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-extrabold text-purple-900 mb-6">
-            Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-teal-500">Relx</span>
+            Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Relx</span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 font-medium mb-4">
             Your trusted platform for managing vehicle maintenance reminders.
@@ -303,6 +310,25 @@ const VehicleReminderForm = ({ apiKey }) => {
             </div>
           ))}
         </div>
+        {/* Testimonial Section */}
+        <div className="flex flex-col bg-gradient-to-r from-blue-500 to-teal-500 rounded-3xl shadow-xl p-8">
+          <h2 className="text-3xl text-white font-semibold mb-4">What Our Users Say</h2>
+          <p className="text-lg text-white mb-6">
+            Relx has completely transformed how I manage my vehicle maintenance. I never forget an oil change or tire check anymore!
+          </p>
+          <p className="text-sm text-white italic">- John D., Happy Customer</p>
+        </div>
+
+
+        <div className="flex flex-col bg-gradient-to-r from-blue-500 to-teal-500 rounded-3xl shadow-xl p-8">
+          <h2 className="text-3xl text-white font-semibold mb-4">What Our Users Say</h2>
+          <p className="text-lg text-white mb-6">
+            Relx has completely transformed how I manage my vehicle maintenance. I never forget an oil change or tire check anymore!
+          </p>
+          <p className="text-sm text-white italic">- John D., Happy Customer</p>
+        </div>
+
+
       </div>
     </div>
   );

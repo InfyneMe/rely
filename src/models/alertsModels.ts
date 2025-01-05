@@ -12,5 +12,5 @@ const alertSchema = new mongoose.Schema({
     a_cal_id: {type: 'string'}
 },{ timestamps: true })
 
-const AlertModel = mongoose.model('Alert', alertSchema);
+const AlertModel = mongoose.models.Alert || mongoose.model('Alert', alertSchema);
 export default AlertModel;
