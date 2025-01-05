@@ -12,12 +12,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <Link href="/dashboard">Home</Link>
                 </h1>
                 <h1 className="cursor-pointer hover:text-blue-500 transition">
-                    <Link href="/dashboard/campaign">Campaign</Link>
+                    <Link href="/dashboard/alerts">Alerts</Link>
                 </h1>
-                <h1 className="cursor-pointer hover:text-blue-500 transition">Event Pass</h1>
-                <h1 className="cursor-pointer hover:text-blue-500 transition">Retail Pass</h1>
-                <h1 className="cursor-pointer hover:text-blue-500 transition">Generic Pass</h1>
-                <h1 className="cursor-pointer hover:text-blue-500 transition">Transport Pass</h1>
+                <h1 className="cursor-pointer hover:text-blue-500 transition">Blogs</h1>
+                <h1 className="cursor-pointer hover:text-blue-500 transition">FAQs</h1>
             </nav>
         </header>
         <main className="p-6">{children}</main>

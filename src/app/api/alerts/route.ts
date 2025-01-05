@@ -1,7 +1,7 @@
 import connectDB from "@/lib/connectDB";
 import UserModel from "@/models/userModels";
 import AddToCalendar from "@/utils/AddToCalendar";
-// import AlertModel from "@/models/alertsModels"; // will use later
+import AlertModel from "@/models/alertsModels"; // will use later
 import EventTicket from "@/utils/GoogleWallet";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -29,7 +29,6 @@ export async function POST(req:NextRequest){
         summary: reminderType,
         vehicle: vehicleNumber
     }
-
     const clientID = process.env.GOOGLE_CLIENT_ID;
     const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
@@ -39,6 +38,21 @@ export async function POST(req:NextRequest){
     if(event.status !== 'confirmed'){
         resData.event = false;
     }
+    await AlertModel.findOneAndUpdate(
+        {a_v_id: vehicleNumber},
+        {
+            a_name: reminderType,
+            a_type: reminderType,
+            a_v_id: vehicleNumber,
+            a_status: 'Sent',
+            a_u_id: user._id,
+            a_end_date: reminderDateTime,
+            a_created_by: user.name,
+            a_pass_link: createPass!.pass,
+            a_cal_id: event.id
+        },
+        {new:true, upsert: true}
+    )
     return NextResponse.json({data: resData, status:true}, {status: 200});
 }
 

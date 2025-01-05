@@ -9,6 +9,7 @@ const alertSchema = new mongoose.Schema({
     a_end_date: {type:'string', required: 'alert end date is required'},
     a_created_by: {type: 'string', required: 'alert user is required'},
     a_pass_link: {type: 'string'},
+    a_cal_id: {type: 'string'}
 },{ timestamps: true })
 
 const AlertModel = mongoose.model('Alert', alertSchema);
