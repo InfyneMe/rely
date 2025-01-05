@@ -33,6 +33,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "^19.0.0",
     "react-leaflet": "^5.0.0",
+    "swiper": "^11.2.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.0.3"
@@ -44,6 +45,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-leaflet": "^2.8.3",
+    "@types/swiper": "^5.4.3",
     "eslint": "^9",
     "eslint-config-next": "15.1.2",
     "postcss": "^8",

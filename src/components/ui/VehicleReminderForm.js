@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Car, Bell, MapPin} from "lucide-react";
 import LoadingSpinner from './Loading';
+// import Testimonial from './Testimonial';
 
 const VehicleReminderForm = ({ apiKey }) => {
   // All existing state management and logic remains the same
@@ -327,8 +328,7 @@ const VehicleReminderForm = ({ apiKey }) => {
           </p>
           <p className="text-sm text-white italic">- John D., Happy Customer</p>
         </div>
-
-
+        {/* <Testimonial /> */}
       </div>
     </div>
   );
