@@ -1,5 +1,6 @@
 import connectDB from "@/lib/connectDB";
 import UserModel from "@/models/userModels";
+import AddToCalendar from "@/utils/AddToCalendar";
 // import AlertModel from "@/models/alertsModels"; // will use later
 import EventTicket from "@/utils/GoogleWallet";
 import { NextRequest, NextResponse } from "next/server";
@@ -18,15 +19,31 @@ export async function POST(req:NextRequest){
     if(!user) return NextResponse.json({error: 'User Not found.Please contact support'}, {status: 401});
 
     const eventTicket = new EventTicket();
-    const createPass= await eventTicket.createClass(vehicleNumber, reminderType, reminderDateTime, location, user);
-    console.log('ticket',createPass);
+    const createPass = await eventTicket.createClass(vehicleNumber, reminderType, reminderDateTime, location, user);
+    if(! createPass!.status) return NextResponse.json({message: 'something went wrong while creating pass'}, {status: 400})
+    
+    const eventData = {
+        location:  location.address,
+        startDate: reminderDateTime,
+        userEmail: user.email,
+        summary: reminderType,
+        vehicle: vehicleNumber
+    }
 
-    return NextResponse.json({message: createPass}, {status: 200});
+    const clientID = process.env.GOOGLE_CLIENT_ID;
+    const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+    const calendarEvent = new AddToCalendar(user.access_token, user.refresh_token, clientID, clientSecret);
+    const event = await calendarEvent.addEvent(eventData);
+    const resData = {passLink: createPass!.pass, event: true}
+    if(event.status !== 'confirmed'){
+        resData.event = false;
+    }
+    return NextResponse.json({data: resData, status:true}, {status: 200});
 }
 
 const getUserByToken = async (token: string) => {
     try {
-        
         const user = await UserModel.findOne({ id_token: token });
         return user;
     } catch (error) {

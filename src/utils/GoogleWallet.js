@@ -82,7 +82,7 @@ export default class EventTicket {
             };
     
             const token = jwt.sign(claims, this.credentials.private_key, { algorithm: 'RS256' });
-            return `https://pay.google.com/gp/v/save/${token}`;
+            return {status: true, pass: `https://pay.google.com/gp/v/save/${token}`};
         } catch (error) {
             console.error(error);
         }

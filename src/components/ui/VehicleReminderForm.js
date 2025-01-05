@@ -2,6 +2,7 @@
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Car, Bell, MapPin} from "lucide-react";
+import LoadingSpinner from './Loading';
 
 const VehicleReminderForm = ({ apiKey }) => {
   // All existing state management and logic remains the same
@@ -17,6 +18,9 @@ const VehicleReminderForm = ({ apiKey }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isApiLoaded, setIsApiLoaded] = useState(false);
   const [error, setError] = useState('');
+
+  const [createAlert, setCreateAlert] = useState(false);
+
   const autoCompleteRef = useRef(null);
   console.log(error)
   const reminderTypes = [
@@ -27,8 +31,6 @@ const VehicleReminderForm = ({ apiKey }) => {
     'Tire Rotation',
     'Oil Change'
   ];
-
-  // All existing useEffect and handler functions remain the same
   useEffect(() => {
     if (!apiKey) {
       setError('Google Maps API key is required');
@@ -69,7 +71,7 @@ const VehicleReminderForm = ({ apiKey }) => {
       return;
     }
 
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
       const response = await autoCompleteRef.current.getPlacePredictions({
         input: value,
@@ -80,7 +82,7 @@ const VehicleReminderForm = ({ apiKey }) => {
       setPredictions([]);
       setError('Failed to fetch location predictions');
     }
-    setIsLoading(false);
+    // setIsLoading(false);
   };
 
   const handlePlaceSelect = async (placeId) => {
@@ -115,20 +117,25 @@ const VehicleReminderForm = ({ apiKey }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      ...formData,
-      location: selectedPlace
-    });
-
+    setIsLoading(true)
     const saveAlert = await axios.post('/api/alerts', {
       ...formData,
       location: selectedPlace
     });
-    console.log(saveAlert);
+    const data = await saveAlert.data
+    console.log('resData:',data)
+    if(data.status === true){
+      setIsLoading(false)
+      setCreateAlert(true)
+      setTimeout(() => {
+        window.location.reload();
+      }, 4000);
+    }
   };
 
   return (
     <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+      {isLoading && <LoadingSpinner message="Creating Alert Please Wait" /> }
         {/* Header Section */}
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
           <div>
@@ -210,12 +217,6 @@ const VehicleReminderForm = ({ apiKey }) => {
                             className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-gray-50 hover:bg-white disabled:bg-gray-100 disabled:cursor-not-allowed"
                           />
 
-                          {isLoading && (
-                            <div className="absolute right-3 top-3">
-                              <div className="animate-spin h-6 w-6 border-2 border-blue-500 rounded-full border-t-transparent"></div>
-                            </div>
-                          )}
-
                           {predictions.length > 0 && (
                             <div className="absolute z-10 w-full mt-2 bg-white rounded-xl shadow-lg max-h-60 overflow-auto border border-gray-100">
                               {predictions.map((prediction) => (
@@ -233,19 +234,13 @@ const VehicleReminderForm = ({ apiKey }) => {
                       </div>
                     </div>
 
-                    {selectedPlace && (
+                    {createAlert && (
                       <div className="mt-3 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-100">
                         <p className="text-sm text-gray-700">
-                          <span className="font-medium">Selected Location:</span> {selectedPlace.address}
+                          <span className="font-medium">Alert Created Successfully</span>
                         </p>
-                        <div className="mt-2 text-xs text-gray-500 flex gap-4">
-                          <span>Lat: {selectedPlace.lat}</span>
-                          <span>Long: {selectedPlace.lng}</span>
-                        </div>
                       </div>
                     )}
-
-                    {/* Submit Button */}
                     <button
                       type="submit"
                       className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-xl 
