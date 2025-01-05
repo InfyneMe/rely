@@ -48,8 +48,10 @@ export async function POST(request: NextRequest) {
                 status: true
             }
         )
-        response.cookies.set('id_token', id_token || '',{
+        const maxAge = 60 * 24 * 60 * 60; // 60 days in seconds
+        response.cookies.set('id_token', id_token || '', {
             httpOnly: true,
+            maxAge: maxAge,
         });
         return response;
         

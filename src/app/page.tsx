@@ -41,7 +41,7 @@ export default function Home() {
   });
 
   return (
-    <div className="place-items-center min-h-screen p-8 sm:p-20 text-center space-y-6 space-y-4" style={{marginTop: '10rem'}}>
+    <div className="place-items-center min-h-screen p-8 sm:p-20 text-center space-y-6 space-y-4">
       {loading && <LoadingSpinner message="Verifying your data please wait..." />}
       <span className="font-poppins tracking-wide font-extrabold text-center md:text-6xl lg:text-8xl xl:text-6xl">
         Relyx -Timely Reminders, 
