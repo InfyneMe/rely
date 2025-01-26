@@ -42,4 +42,6 @@ next-env.d.ts
 
 .idea
 
+# keys directory
 /keys/*
+!/keys/keys.json

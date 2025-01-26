@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "relyx-443714",
+  "private_key_id": "d9a39dee1640dd3c6b3c51b3bc68d89e4c4e924a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCv269vf9Sp6m+M\nKm+QMGEa4vMONXNFZu8ukMeEAZiTVk8lNAIqszKBZe4miaNroBmdqWr4rkpB7+xa\npTs6y7xHMm1sjv5dHuR3qUKkOb71SJ1cT3L/nMfLy/CH5Kxtqx5o834/4nLDHBPf\n66du3Tv4UKM2vOXLddzyDDVZ/85egAOwJJZPGAoOU10slmw99HFM1AFZ2rHNLZOd\nlQZxJNwzhF+q/6Q8OfeSbfWQkAGLI72IP9+SkaSKgtQhHBcO4fmmUJYIRC/6mmgX\nrAbxlcYdYJL+uL8q1M16/mId9b+ueuISs1OYDtEpeoYpC2RP8IQXUAWwJMULI+C9\nj4eON0TLAgMBAAECggEAQxoxi/sb+6X/4F0E6uD6/JZipiZREMdhNsR5zO4K+RVy\n58A7n213NRbe04eretLBU36k2bUvko9pAYGQ4zOAaS5dwJGjj4bNKLfGPQHn0pJd\nsS6Ds/Nv7VypMEFaZhJobSWUI+5VWguprcSuw8fZLTwfuzBDAuq7XwS3itroNPhC\nWSVI1lMy2etaahrGOHpAcNVhdiTARo3Kwsp+JSeuy4qGRjJCT5ru2WtR1cvGWyU1\nyjCGrhaVGZ1u0kM4qYiQagENIK3Z/1UGpGKyVp3BJe/6UHyiM7Dr/iVi83cki2IP\nflrTyziRgWUgz3Yfx+zKGBFotA5hZZ2vk7802wd82QKBgQD03MKyK1pWHvqLppsQ\n9La+HBuz8RJVcTB7SzYYjnu6E0FUCtSYhHUnEMEUS7YFjwj+ZoBudJfyLNGsrPiz\nr1/dpRZMhCIJElwip/gY6f9a0isNp2wyIKEH29XYsI7QcMdj7h7HX22lGmZOE3u2\nxGf5UCINQTHfBNfV/BM3YtbHBwKBgQC322wbpjvAOoGB9KdRDn7ZlCURo7nUeo5Y\nsnbVZtrDcMNxAcDXLqkOlLbzYJPg/YLrm6s5kGniMR0z3TtyOsup6pavqj8Yfc66\nSfxcP+lNJgloDtyR80pOn+Q70jdnRrlewGgYubIWLrnIOi4dlGnR/S9/hJGcRB5F\nEoPFFdg/HQKBgQCjXv+P/JjjSPwFXP2tDHk40mwxXLDMzR55xK6tJ7OpbNtzhV5e\n/FFl5SnNrs4dW1e21RDvoV8Xt4uV2Dp/OI2PxmvgVXCX+OX8QXGovccgA4WyMHhh\n4Z9PLP+6+eHvdK+0HtXuU99F/x0vDpTGVrjAgRSXH1503DhdjzgLBiki1QKBgE2H\npcrzCndBNKOMe5HevvcZVZheplpHZAdbGmla+h04S/I3fw4+iuOvKobuzu0teivI\ndSfNEhlkBKB+RjchPAjm96wT6o91XduIn3Z3LPZvd7/9pF2XblpBaokfWGWgmUKv\neDYU+FgKVCVvA0tN7mGylnj7ejufLfSKni5Zy9qxAoGASwfNL5aa9nBGfzobcxOr\njwnGYxduhfWDF7OQe7kIXI26O+rK6/i5HpD5tR0paypBRObQG5Np48THnEJ71awO\ne50cEvxdvss/jliEbVX1FSTVH5C3J0ubJ4W7rJGAJb5Fwv6YqQDQ543DjRWSI/XP\nq/P5Hyhg9CA2+Ool3TMH01c=\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-wallet-service-account@relyx-443714.iam.gserviceaccount.com",
+  "client_id": "108234805985215867080",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-wallet-service-account%40relyx-443714.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
