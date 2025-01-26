@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { MapPin, MapIcon } from "lucide-react";
 
 interface RideRequestFormProps {
   onSubmit?: (data: {
@@ -33,7 +34,8 @@ const RideRequestForm: React.FC<RideRequestFormProps> = ({ onSubmit }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Location Inputs */}
         <div className="space-y-3">
-          <label className="text-sm font-medium text-gray-700">
+          <label className="flex items-center text-sm font-medium text-gray-700">
+            <MapIcon className=" text-blue-500 mr-2" />
             Start Location
           </label>
           <input
@@ -52,7 +54,8 @@ const RideRequestForm: React.FC<RideRequestFormProps> = ({ onSubmit }) => {
         </div>
 
         <div className="space-y-3">
-          <label className="text-sm font-medium text-gray-700">
+          <label className="flex items-center text-sm font-medium text-gray-700">
+            <MapPin className="text-blue-500 mr-2" />
             Destination Location
           </label>
           <input
