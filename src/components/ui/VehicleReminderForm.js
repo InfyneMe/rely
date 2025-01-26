@@ -120,25 +120,47 @@ const VehicleReminderForm = ({ apiKey }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
-    const saveAlert = await axios.post('/api/alerts', {
-      ...formData,
-      location: selectedPlace
-    });
-    const data = await saveAlert.data
-    if (data.status === true) {
-      setIsLoading(false)
-      setCreateAlert(true)
-      const response = await axios.get('/api/getAlerts');
-      setAlerts(response.data);
-      setFormData({
-        vehicleNumber: '',
-        reminderType: '',
-        reminderDateTime: '',
+    setIsLoading(true);
+
+    // Validate required fields
+    if (!formData.vehicleNumber || !formData.reminderType || !formData.reminderDateTime || !selectedPlace) {
+      alert("All fields are required.");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const saveAlert = await axios.post('/api/alerts', {
+        ...formData,
+        location: selectedPlace,
       });
-      setSelectedPlace(null);
-      setSearchValue('');
-      setTimeout(() => setCreateAlert(false), 3000);
+
+      const data = saveAlert.data;
+      if (data.status === true) {
+        setIsLoading(false);
+        setCreateAlert(true);
+        const response = await axios.get('/api/getAlerts');
+        setFormData({
+          vehicleNumber: '',
+          reminderType: '',
+          reminderDateTime: '',
+        });
+        setSelectedPlace(null);
+        setSearchValue('');
+
+        setTimeout(() => {
+          if (response) {
+            alert("Alert Created Successfully!");
+          }
+          setCreateAlert(false)
+        }, 2000);
+
+      }
+    } catch (error) {
+      console.error("Error saving alert:", error.response?.data || error.message);
+      alert("Failed to save alert. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
