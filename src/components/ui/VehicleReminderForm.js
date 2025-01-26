@@ -1,8 +1,9 @@
 'use client';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
-import { Calendar, Car, Bell, MapPin} from "lucide-react";
+import { Calendar, Car, Bell, MapPin } from "lucide-react";
 import LoadingSpinner from './Loading';
+import RideRequestForm from './RideRequestForm';
 // import Testimonial from './Testimonial';
 
 const VehicleReminderForm = ({ apiKey }) => {
@@ -22,7 +23,7 @@ const VehicleReminderForm = ({ apiKey }) => {
 
   const [createAlert, setCreateAlert] = useState(false);
   const [alerts, setAlerts] = useState([]);
-
+  console.log(alerts)
   const autoCompleteRef = useRef(null);
   console.log(error)
   const reminderTypes = [
@@ -38,13 +39,13 @@ const VehicleReminderForm = ({ apiKey }) => {
       setError('Google Maps API key is required');
       return;
     }
-  
+
     // Check if the script is already loaded
     if (window.google && window.google.maps) {
       initializeGooglePlaces();
     } else {
       const existingScript = document.querySelector('script[src^="https://maps.googleapis.com/maps/api/js"]');
-      
+
       // If the script is not already loaded, load it
       if (!existingScript) {
         const script = document.createElement('script');
@@ -54,7 +55,7 @@ const VehicleReminderForm = ({ apiKey }) => {
         script.onload = () => initializeGooglePlaces();
         script.onerror = () => setError('Failed to load Google Maps API');
         document.head.appendChild(script);
-  
+
         return () => {
           if (document.head.contains(script)) {
             document.head.removeChild(script);
@@ -63,7 +64,7 @@ const VehicleReminderForm = ({ apiKey }) => {
       }
     }
   }, [apiKey]);
-  
+
 
   useEffect(() => {
     const alerts = async () => {
@@ -143,7 +144,7 @@ const VehicleReminderForm = ({ apiKey }) => {
       location: selectedPlace
     });
     const data = await saveAlert.data
-    if(data.status === true){
+    if (data.status === true) {
       setIsLoading(false)
       setCreateAlert(true)
       const response = await axios.get('/api/getAlerts');
@@ -161,18 +162,18 @@ const VehicleReminderForm = ({ apiKey }) => {
 
   return (
     <div className="max-w-7xl mx-auto p-6 sm:p-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-purple-900 mb-6">
-            Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Relx</span>
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 font-medium mb-4">
-            Your trusted platform for managing vehicle maintenance reminders.
-          </p>
-          <p className="text-sm sm:text-base text-gray-500">
-            Stay on top of your vehicles needs with easy-to-use reminders, and never miss an important service or checkup again.
-          </p>
-          {isLoading && <LoadingSpinner message="Creating Alert, Please Wait..." />}
-        </div>
+      <div className="text-center mb-12">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-purple-900 mb-6">
+          Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Relx</span>
+        </h1>
+        <p className="text-lg sm:text-xl text-gray-600 font-medium mb-4">
+          Your trusted platform for managing vehicle maintenance reminders.
+        </p>
+        <p className="text-sm sm:text-base text-gray-500">
+          Stay on top of your vehicles needs with easy-to-use reminders, and never miss an important service or checkup again.
+        </p>
+        {isLoading && <LoadingSpinner message="Creating Alert, Please Wait..." />}
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
         {/* Left: Form Section */}
@@ -290,26 +291,13 @@ const VehicleReminderForm = ({ apiKey }) => {
 
         {/* Right: Alerts Section */}
         <div className="flex flex-col bg-white border border-purple-700 rounded-3xl shadow-xl p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Your Alerts</h2>
-          {alerts.slice(0, 2).map((alert) => (
-            <div key={alert._id} className="mb-4 bg-gray-50 border border-gray-200 rounded-xl p-4 hover:shadow-md transition">
-              <h3 className="text-lg font-medium text-gray-800">{alert.a_v_id}</h3>
-              <p className="text-sm text-gray-600 mt-1">
-                <strong>Reminder Type:</strong> {alert.a_type}
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                <strong>Reminder Date & Time:</strong> {alert.a_end_date}
-              </p>
-              <a
-                href={alert.a_pass_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-block px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
-              >
-                View Pass
-              </a>
-            </div>
-          ))}
+          <div className="text-center mb-6">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Book Your Next Ride
+            </h1>
+            <p className="text-gray-600 mt-2">Easily schedule and manage your vehicle maintenance reminders.</p>
+          </div>
+          <RideRequestForm />
         </div>
         {/* Testimonial Section */}
         <div className="flex flex-col bg-gradient-to-r from-blue-500 to-teal-500 rounded-3xl shadow-xl p-8">
