@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Car, Bell, MapPin } from "lucide-react";
 import LoadingSpinner from './Loading';
 import RideRequestForm from './RideRequestForm';
-// import Testimonial from './Testimonial';
 
 const VehicleReminderForm = ({ apiKey }) => {
   // All existing state management and logic remains the same
@@ -20,12 +19,8 @@ const VehicleReminderForm = ({ apiKey }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isApiLoaded, setIsApiLoaded] = useState(false);
   const [error, setError] = useState('');
-
   const [createAlert, setCreateAlert] = useState(false);
-  const [alerts, setAlerts] = useState([]);
-  console.log(alerts)
   const autoCompleteRef = useRef(null);
-  console.log(error)
   const reminderTypes = [
     'Service Due',
     'Insurance Renewal',
@@ -64,19 +59,6 @@ const VehicleReminderForm = ({ apiKey }) => {
       }
     }
   }, [apiKey]);
-
-
-  useEffect(() => {
-    const alerts = async () => {
-      try {
-        const response = await axios.get('/api/getAlerts')
-        setAlerts(response.data)
-      } catch (error) {
-        setError(error.message)
-      }
-    };
-    alerts()
-  }, [])
 
   const initializeGooglePlaces = () => {
     if (window.google && window.google.maps && window.google.maps.places) {
@@ -162,6 +144,7 @@ const VehicleReminderForm = ({ apiKey }) => {
 
   return (
     <div className="max-w-7xl mx-auto p-6 sm:p-8">
+      {error && <p className="text-red-500">{error}</p>}
       <div className="text-center mb-12">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-purple-900 mb-6">
           Welcome to <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Relx</span>
